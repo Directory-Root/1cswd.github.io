@@ -20,7 +20,7 @@
     <title>Hello World</title>
     <link href="http://www.1cswd.com/hello-world/"/>
     <id>http://www.1cswd.com/hello-world/</id>
-    <published>2018-10-28T16:23:48.808Z</published>
+    <published>2018-10-31T13:50:58.662Z</published>
     <updated>2018-10-28T16:23:48.808Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="hljs-string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
@@ -30,6 +30,29 @@
       
       
         &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>net-speeder</title>
+    <link href="http://www.1cswd.com/net-speeder/"/>
+    <id>http://www.1cswd.com/net-speeder/</id>
+    <published>2018-10-28T15:47:24.000Z</published>
+    <updated>2018-10-31T13:43:15.471Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用美国 VPS 搭建个人梯子最令人难以忍受的问题是什么？</p><p>丢包率。</p><p>使用 cn2 线路的节点不足 200ms 的延迟只要你不是用来玩游戏之外都不会有太大感知， 10Gbps 的带宽也绝对不会对你的连接速度造成瓶颈，但从自由大陆漂洋过海的数据很难保证没有丢失。</p><p>所以诞生了很多解决方案，比如锐速。</p><p>但众所周知的是锐速并不支持 OpenVZ 的 Container 式虚拟化方案（而且它不开源）， BBR 的效果又难以让人满意，所以对于使用 OpenVZ 的用户（穷人）来说只剩了两个令人满意的优化方案：Net Speeder 和 KCPtun。</p><p>本篇主要讲前者的使用。</p><p>推荐 Net Speeder 的理由很简单：</p><p>-极小的占用<br>-开源且简单到只有 NOI 水平的代码</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="从-GitHub-下载源码"><a href="#从-GitHub-下载源码" class="headerlink" title="从 GitHub 下载源码"></a>从 GitHub 下载源码</h3><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/snooda/net-speeder/master/net_speeder.c</span><br></pre></td></tr></table></figure><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>RedHat 系：</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">yum install -y libnet libnet-devel libpcap libpcap-devel gcc</span><br></pre></td></tr></table></figure><p>Debian 系：</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">apt-get install -y libpcap-dev libnet-dev libnids-dev gcc</span><br></pre></td></tr></table></figure><h3 id="进行编译"><a href="#进行编译" class="headerlink" title="进行编译"></a>进行编译</h3><p>OpenVZ：</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">gcc ./net_speeder.c -o net_speeder -O2 -lpcap -lnet -DCOOKED</span><br></pre></td></tr></table></figure><p>KVM：</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">gcc ./net_speeder.c -o net_speeder -O2 -lpcap -lnet</span><br></pre></td></tr></table></figure><p>（相信玄学的人和强迫症可以使用 O3 优化）</p><h3 id="启动-Net-Speeder"><a href="#启动-Net-Speeder" class="headerlink" title="启动 Net Speeder"></a>启动 Net Speeder</h3><p>OpenVZ：</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">nohup ./net_speeder venet0 <span class="hljs-string">"ip"</span> &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure><p>KVM：</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">nohup ./net_speeder eth0 <span class="hljs-string">"ip"</span> &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure><p>加入开机启动：</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">vim /etc/profile.d/net_speeder.sh</span><br></pre></td></tr></table></figure><p>输入</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line"><span class="hljs-meta">#! /bin/sh</span></span><br><span class="line">你 VPS 类型对应的启动命令（需要绝对地址）</span><br></pre></td></tr></table></figure><p>:wq 保存并退出即可。</p><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">ping -c 4 google.com</span><br></pre></td></tr></table></figure><p>若显示有 duplicate 则配置成功。</p><p>但 Net Speeder 并不是没有缺点的，由于它强制双倍发包的策略，在丢包率低的时候，反而可能会减慢网络速度。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;使用美国 VPS 搭建个人梯子最令人难以忍受的问题是什么？&lt;/p&gt;
+&lt;p&gt;丢包率。&lt;/p&gt;
+&lt;p&gt;使用 cn2 线路的节点不足 200ms 的延迟只要你不是用来玩游戏之外都不会有太大感知， 10Gbps 的带宽也绝对不会对你的连接速度造成瓶颈，但从自由大陆漂洋过海的数据很难
       
     
     </summary>

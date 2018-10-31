@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="听风">
 <meta property="og:description" content="使用美国 VPS 搭建个人梯子最令人难以忍受的问题是什么？ 丢包率。 使用 cn2 线路的节点不足 200ms 的延迟只要你不是用来玩游戏之外都不会有太大感知， 10Gbps 的带宽也绝对不会对你的连接速度造成瓶颈，但从自由大陆漂洋过海的数据很难保证没有丢失。 所以诞生了很多解决方案，比如锐速。 但众所周知的是锐速并不支持 OpenVZ 的 Container 式虚拟化方案（而且它不开源）， BB">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-31T13:53:39.494Z">
+<meta property="og:updated_time" content="2018-10-31T14:03:38.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="net-speeder">
 <meta name="twitter:description" content="使用美国 VPS 搭建个人梯子最令人难以忍受的问题是什么？ 丢包率。 使用 cn2 线路的节点不足 200ms 的延迟只要你不是用来玩游戏之外都不会有太大感知， 10Gbps 的带宽也绝对不会对你的连接速度造成瓶颈，但从自由大陆漂洋过海的数据很难保证没有丢失。 所以诞生了很多解决方案，比如锐速。 但众所周知的是锐速并不支持 OpenVZ 的 Container 式虚拟化方案（而且它不开源）， BB">
@@ -151,7 +151,7 @@
 <p>但众所周知的是锐速并不支持 OpenVZ 的 Container 式虚拟化方案（而且它不开源）， BBR 的效果又难以让人满意，所以对于使用 OpenVZ 的用户（穷人）来说只剩了两个令人满意的优化方案：Net Speeder 和 KCPtun。</p>
 <p>本篇主要讲前者的使用。</p>
 <p>推荐 Net Speeder 的理由很简单：</p>
-<p>-极小的占用<br>-开源且简单到只有 NOI 水平的代码</p>
+<p>-极小的占用<br>-开源且<del>简单</del>到只有 NOIp 水平的代码</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="从-GitHub-下载源码"><a href="#从-GitHub-下载源码" class="headerlink" title="从 GitHub 下载源码"></a>从 GitHub 下载源码</h3><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/snooda/net-speeder/master/net_speeder.c</span><br></pre></td></tr></table></figure>
 <h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>RedHat 系：</p>
 <figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">yum install -y libnet libnet-devel libpcap libpcap-devel gcc</span><br></pre></td></tr></table></figure>

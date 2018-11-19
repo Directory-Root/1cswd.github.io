@@ -184,12 +184,89 @@
 <p>加入开机启动：</p>
 <figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">vim /etc/profile.d/net_speeder.sh</span><br></pre></td></tr></table></figure>
 <p>输入</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line"><span class="hljs-meta">#! /bin/sh</span></span><br><span class="line">你 VPS 类型对应的启动命令（需要绝对地址）</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain hljs"><table><tr><td class="code"><pre><span class="line">#! /bin/sh</span><br><span class="line">你 VPS 类型对应的启动命令（需要绝对地址）</span><br></pre></td></tr></table></figure>
 <p>:wq 保存并退出即可。</p>
 <figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">ping -c 4 google.com</span><br></pre></td></tr></table></figure>
 <p>若显示有 duplicate 则配置成功。</p>
 <p>但 Net Speeder 并不是没有缺点的，由于它强制双倍发包的策略，在丢包率低的时候，反而可能会减慢网络速度。</p>
 
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/V2Ray-WebSocket/" class="image is-7by1">
+            <img class="thumbnail" src="/V2Ray-WebSocket/cover.jpg" alt="V2Ray 的 WebSocket 配置">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2017-11-19T15:53:27.000Z">2017-11-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/网络/">网络</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1279 个字)
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/V2Ray-WebSocket/">V2Ray 的 WebSocket 配置</a>
+            
+        </h1>
+        <div class="content">
+            <p>之前有报道称 Shadowsocks 协议已经被特征化识别且防火墙即将开始主动嗅探，并且拿了一份大学论文做证据：</p>
+<p><a href="https://www.1cswd.com/Shadowsocks-Sniffing.pdf">Shadowsocks Sniffing.pdf</a></p>
+<p>反正我是不信的，特别是我看到里面说“客户端和服务端使用 SOCKS5 协议连接”时，我更加清楚这是一篇造假或充数的论文<del>（若维护长城防火墙的都是这种人的话我甚至觉得 Shadowosocks 可以至少再续两年命）</del>。</p>
+<p>很快又有人申请了一个所谓可以嗅探 Shadowsocks 的专利：</p>
+<p><a href="https://www.google.com/patents/CN105281973A" target="_blank" rel="noopener">一种针对特定网站类别的网页指纹识别方法</a></p>
+<p>由于不清楚详细信息，这个检测方式我不好评论，但我仍然不认为 Shadowsocks 会在它主攻的 Shadowy 方面被人找出什么漏洞。</p>
+<p>但事实证明我错了：2018年一月的某天，我的 Shadowosocks 突然变得奇慢无比，后来根本无法连接。在另一端口重新配置后可以重新连接，却很快又会莫名死掉，换成原端口仍无法连接，而每个新端口仅可勉强续命十几分钟。</p>
+<p>（P.S. 尝试过使用 http-simple 混淆，加密一直使用 AES-128-GCM）</p>
+<p>我立刻明白——被封端口了。</p>
+<p>不管如何解释，但无法改变的事实是， Shadowsocks 协议好像真的被分析出特征了。</p>
+<p>曾想过使用 ShadowsocksR 来代替，但是出于由 <a href="https://github.com/shadowsocks/shadowsocks-windows/issues/293#issuecomment-132253168" target="_blank" rel="noopener">clowwindy 与 Breakwa11 的争吵</a>产生的对 ShadowsocksR 的反感（我认为遵守 GPL 等协议是开源社区开发者最基本的素质），后来还是放弃了。</p>
+<p>所以我需要一种新的代理工具和协议。</p>
+<p>于是我发现了 <a href="https://www.v2ray.com/" target="_blank" rel="noopener">V2Ray</a>,一个模块化的代理软件包，它的目标是提供常用的代理软件模块，简化网络代理软件的开发。</p>
+<h3 id="伪装思路"><a href="#伪装思路" class="headerlink" title="伪装思路"></a>伪装思路</h3><p>通过 Nginx 监听 443 端口，将 V2Ray 的请求转发到内网的服务端，而普通请求则返回一个网页，从而将服务器伪装成一个网页服务器。由 WebSocket 技术实现。</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>首先你需要一个已经解析到你的服务器的域名，设置一个二级域名用作代理。</p>
+<p>由于 V2Ray 正常工作需要服务端与客户端的时间一致，所以需要使用 NTPdate 进行时间校正。（具体原因参见<a href="https://www.v2ray.com/chapter_03/01_effective.html" target="_blank" rel="noopener">《Effective V2Ray》</a>）</p>
+<h4 id="安装-NTPdate："><a href="#安装-NTPdate：" class="headerlink" title="安装 NTPdate："></a>安装 NTPdate：</h4><h4 id="RedHat-系："><a href="#RedHat-系：" class="headerlink" title="RedHat 系："></a>RedHat 系：</h4><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">yum install ntpdate -y</span><br></pre></td></tr></table></figure>
+<h4 id="Debian-系："><a href="#Debian-系：" class="headerlink" title="Debian 系："></a>Debian 系：</h4><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">apt-get update &amp;&amp; apt-get install ntpdate -y</span><br></pre></td></tr></table></figure>
+<h4 id="进行时间校正："><a href="#进行时间校正：" class="headerlink" title="进行时间校正："></a>进行时间校正：</h4><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">systemctl stop ntp &amp;&gt;/dev/null</span><br><span class="line">ntpdate time.nist.gov</span><br></pre></td></tr></table></figure>
+<h4 id="安装依赖："><a href="#安装依赖：" class="headerlink" title="安装依赖："></a>安装依赖：</h4><h4 id="RedHat-系：-1"><a href="#RedHat-系：-1" class="headerlink" title="RedHat 系："></a>RedHat 系：</h4><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">yum -y install wget curl lsof crontabs net-tools bc unzip socat nc nginx</span><br></pre></td></tr></table></figure>
+<h4 id="Debian-系：-1"><a href="#Debian-系：-1" class="headerlink" title="Debian 系："></a>Debian 系：</h4><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">apt-get -y install wget curl lsof cron net-tools bc unzip socat netcat nginx</span><br></pre></td></tr></table></figure>
+<h4 id="为了后期进行长期的维护，这里推荐使用官方安装脚本而非后文的直接下载："><a href="#为了后期进行长期的维护，这里推荐使用官方安装脚本而非后文的直接下载：" class="headerlink" title="为了后期进行长期的维护，这里推荐使用官方安装脚本而非后文的直接下载："></a><strong>为了后期进行长期的维护，这里推荐使用官方安装脚本而非后文的直接下载：</strong></h4><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">bash &lt;(curl -L -s https://install.direct/go.sh)</span><br></pre></td></tr></table></figure>
+<h4 id="下载-V2Ray-Core："><a href="#下载-V2Ray-Core：" class="headerlink" title="下载 V2Ray-Core："></a><del>下载 V2Ray-Core：</del></h4><h4 id="32位："><a href="#32位：" class="headerlink" title="32位："></a><del>32位：</del></h4><p><del><a href="https://github.com/v2ray/v2ray-core/releases/download/v3.14/v2ray-linux-32.zip" target="_blank" rel="noopener">https://github.com/v2ray/v2ray-core/releases/download/v3.14/v2ray-linux-32.zip</a> &amp;&amp; unzip ./v2ray-linux-32.zip</del></p>
+<h4 id="64位："><a href="#64位：" class="headerlink" title="64位："></a><del>64位：</del></h4><p><del><a href="https://github.com/v2ray/v2ray-core/releases/download/v3.14/v2ray-linux-64.zip" target="_blank" rel="noopener">https://github.com/v2ray/v2ray-core/releases/download/v3.14/v2ray-linux-64.zip</a> &amp;&amp; unzip ./v2ray-linux-64.zip</del></p>
+<h4 id="把-V2Ray-移动到-etc-v2ray"><a href="#把-V2Ray-移动到-etc-v2ray" class="headerlink" title="把 V2Ray 移动到 /etc/v2ray/"></a><del>把 V2Ray 移动到 /etc/v2ray/</del></h4><h4 id="生成证书："><a href="#生成证书：" class="headerlink" title="生成证书："></a>生成证书：</h4><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">curl https://get.acme.sh | sh</span><br><span class="line">~/.acme.sh/acme.sh --issue -d 你的域名 --standalone -k ec-256 --force</span><br><span class="line">~/.acme.sh/acme.sh --installcert -d 你的域名 --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc</span><br></pre></td></tr></table></figure>
+<h4 id="写入配置文件到-etc-v2ray-config-json"><a href="#写入配置文件到-etc-v2ray-config-json" class="headerlink" title="写入配置文件到 /etc/v2ray/config.json:"></a>写入配置文件到 /etc/v2ray/config.json:</h4><figure class="highlight json hljs"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="hljs-attr">"inbound"</span>: &#123;</span><br><span class="line">    <span class="hljs-attr">"port"</span>: <span class="hljs-number">10000</span>,</span><br><span class="line">    <span class="hljs-attr">"listen"</span>:<span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="hljs-attr">"protocol"</span>: <span class="hljs-string">"vmess"</span>,</span><br><span class="line">    <span class="hljs-attr">"settings"</span>: &#123;</span><br><span class="line">      <span class="hljs-attr">"clients"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="hljs-attr">"id"</span>: <span class="hljs-string">"随机生成一个UUID填入"</span>,</span><br><span class="line">          <span class="hljs-attr">"alterId"</span>: <span class="hljs-number">64</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="hljs-attr">"streamSettings"</span>:&#123;</span><br><span class="line">      <span class="hljs-attr">"network"</span>:<span class="hljs-string">"ws"</span>,</span><br><span class="line">      <span class="hljs-attr">"wsSettings"</span>: &#123;</span><br><span class="line">      <span class="hljs-attr">"path"</span>: <span class="hljs-string">"/Proxy/"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="hljs-attr">"outbound"</span>: &#123;</span><br><span class="line">    <span class="hljs-attr">"protocol"</span>: <span class="hljs-string">"freedom"</span>,</span><br><span class="line">    <span class="hljs-attr">"settings"</span>: &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="写入-Nginx-配置到-etc-nginx-conf-d-v2ray-conf："><a href="#写入-Nginx-配置到-etc-nginx-conf-d-v2ray-conf：" class="headerlink" title="写入 Nginx 配置到 /etc/nginx/conf.d/v2ray.conf："></a>写入 Nginx 配置到 /etc/nginx/conf.d/v2ray.conf：</h4><figure class="highlight nginx hljs"><table><tr><td class="code"><pre><span class="line"><span class="hljs-section">server</span> &#123;</span><br><span class="line">        <span class="hljs-attribute">if</span> ( <span class="hljs-variable">$request_uri</span> !<span class="hljs-regexp">~ /Proxy/</span> ) &#123;</span><br><span class="line">               <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/(.*)$</span> https://你的一级域名/<span class="hljs-variable">$1</span> <span class="hljs-literal">permanent</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-attribute">listen</span>  <span class="hljs-number">443</span> ssl;</span><br><span class="line">        <span class="hljs-attribute">ssl</span> <span class="hljs-literal">on</span>;</span><br><span class="line">        <span class="hljs-attribute">ssl_certificate</span>       /etc/v2ray/v2ray.crt;</span><br><span class="line">        <span class="hljs-attribute">ssl_certificate_key</span>   /etc/v2ray/v2ray.key;</span><br><span class="line">        <span class="hljs-attribute">ssl_protocols</span>         TLSv1 TLSv1.<span class="hljs-number">1</span> TLSv1.<span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-attribute">ssl_ciphers</span>           HIGH:!aNULL:!MD5;</span><br><span class="line">        <span class="hljs-attribute">server_name</span>           你的完整二级域名;</span><br><span class="line">        <span class="hljs-attribute">location</span> /Proxy/ &#123;</span><br><span class="line">        <span class="hljs-attribute">proxy_redirect</span> <span class="hljs-literal">off</span>;</span><br><span class="line">        <span class="hljs-attribute">proxy_pass</span> http://127.0.0.1:10000;</span><br><span class="line">        <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-attribute">proxy_set_header</span> Upgrade \<span class="hljs-variable">$http_upgrade</span>;</span><br><span class="line">        <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">"upgrade"</span>;</span><br><span class="line">        <span class="hljs-attribute">proxy_set_header</span> Host \<span class="hljs-variable">$http_host</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="写入默认-Nginx-配置到-etc-nginx-conf-d-default-conf："><a href="#写入默认-Nginx-配置到-etc-nginx-conf-d-default-conf：" class="headerlink" title="写入默认 Nginx 配置到 /etc/nginx/conf.d/default.conf："></a>写入默认 Nginx 配置到 /etc/nginx/conf.d/default.conf：</h4><figure class="highlight nginx hljs"><table><tr><td class="code"><pre><span class="line"><span class="hljs-section">server</span> &#123;</span><br><span class="line"> <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span>;</span><br><span class="line"> <span class="hljs-attribute">server_name</span> localhost;</span><br><span class="line"> <span class="hljs-comment">#charset koi8-r;</span></span><br><span class="line"> <span class="hljs-comment">#access_log /var/log/nginx/host.access.log main;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attribute">location</span> / &#123;</span><br><span class="line"> <span class="hljs-attribute">root</span> /usr/share/nginx/html;</span><br><span class="line"> <span class="hljs-attribute">index</span> index.html index.htm;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#error_page 404 /404.html;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line"> <span class="hljs-comment">#</span></span><br><span class="line"> <span class="hljs-attribute">error_page</span> <span class="hljs-number">500</span> <span class="hljs-number">502</span> <span class="hljs-number">503</span> <span class="hljs-number">504</span> /50x.html;</span><br><span class="line"> <span class="hljs-attribute">location</span> = /50x.html &#123;</span><br><span class="line"> <span class="hljs-attribute">root</span> /usr/share/nginx/html;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 /usr/share/nginx/html 制作一个伪装页面。</p>
+<h4 id="重启-Nginx-并启动-V2Ray"><a href="#重启-Nginx-并启动-V2Ray" class="headerlink" title="重启 Nginx 并启动 V2Ray:"></a>重启 Nginx 并启动 V2Ray:</h4><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">/usr/nginx/sbin/nginx -s reload</span><br><span class="line">nohup /etc/v2ray/v2ray -config /etc/v2ray/config.json &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p>使用客户端连接即可，大功告成！</p>
+<h3 id="客户端配置："><a href="#客户端配置：" class="headerlink" title="客户端配置："></a>客户端配置：</h3><figure class="highlight plain hljs"><table><tr><td class="code"><pre><span class="line">地址：你的完整二级域名</span><br><span class="line">端口：443</span><br><span class="line">用户ID：生成的 UUID</span><br><span class="line">AlterID：64</span><br><span class="line">加密方式：随意（手机推荐 chacha20-ietf，电脑推荐 AES-128-GCM）</span><br><span class="line">传输协议：WebSocket</span><br><span class="line">伪装类型：无需伪装</span><br><span class="line">伪装域名：/Proxy/</span><br><span class="line">底层安全：TLS</span><br></pre></td></tr></table></figure>
         </div>
         
         
@@ -235,7 +312,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        1
+                        2
                     </p>
                 </div>
             </div>
@@ -255,7 +332,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        2
+                        4
                     </p>
                 </div>
             </div>
@@ -341,7 +418,7 @@
                 <span class="level-item">网络</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li>
             </ul>
@@ -355,7 +432,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a>
+        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/V2Ray/" style="font-size: 10px;">V2Ray</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/网络/" style="font-size: 20px;">网络</a>
     </div>
 </div>
 
@@ -389,6 +466,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/V2Ray-WebSocket/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/V2Ray-WebSocket/cover.jpg" alt="V2Ray 的 WebSocket 配置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-11-19T15:53:27.000Z">2017-11-19</time></div>
+                    <a href="/V2Ray-WebSocket/" class="has-link-black-ter is-size-6">V2Ray 的 WebSocket 配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/网络/">网络</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -405,6 +501,17 @@
             <a class="level is-marginless" href="/archives/2018/10/">
                 <span class="level-start">
                     <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2017</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -437,12 +544,34 @@
                 </li>
                 
                 <li>
+                    <a class="level is-marginless" href="/tags/V2Ray/">
+                        <span class="level-start">
+                            <span class="level-item">V2Ray</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/技术/">
+                        <span class="level-start">
+                            <span class="level-item">技术</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
                     <a class="level is-marginless" href="/tags/网络/">
                         <span class="level-start">
                             <span class="level-item">网络</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
@@ -487,6 +616,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/V2Ray-WebSocket/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/V2Ray-WebSocket/cover.jpg" alt="V2Ray 的 WebSocket 配置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-11-19T15:53:27.000Z">2017-11-19</time></div>
+                    <a href="/V2Ray-WebSocket/" class="has-link-black-ter is-size-6">V2Ray 的 WebSocket 配置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/网络/">网络</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -503,6 +651,17 @@
             <a class="level is-marginless" href="/archives/2018/10/">
                 <span class="level-start">
                     <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2017/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2017</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -535,12 +694,34 @@
                 </li>
                 
                 <li>
+                    <a class="level is-marginless" href="/tags/V2Ray/">
+                        <span class="level-start">
+                            <span class="level-item">V2Ray</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/技术/">
+                        <span class="level-start">
+                            <span class="level-item">技术</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
                     <a class="level is-marginless" href="/tags/网络/">
                         <span class="level-start">
                             <span class="level-item">网络</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>

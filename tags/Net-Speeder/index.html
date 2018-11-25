@@ -146,7 +146,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 481 个字)
+                    3 分钟 读完 (大约 482 个字)
                 </span>
                 
             </div>
@@ -164,33 +164,16 @@
 <p>所以诞生了很多解决方案，比如锐速。</p>
 <p>但众所周知的是锐速并不支持 OpenVZ 的 Container 式虚拟化方案（而且它不开源）， BBR 的效果又难以让人满意，所以对于使用 OpenVZ 的用户（穷人）来说只剩了两个令人满意的优化方案：Net Speeder 和 KCPtun。</p>
 <p>本篇主要讲前者的使用。</p>
-<p>推荐 Net Speeder 的理由很简单：</p>
-<p>-极小的占用<br>-开源且<del>简单</del>到只有 NOIp 水平的代码</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="从-GitHub-下载源码"><a href="#从-GitHub-下载源码" class="headerlink" title="从 GitHub 下载源码"></a>从 GitHub 下载源码</h3><figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/snooda/net-speeder/master/net_speeder.c</span><br></pre></td></tr></table></figure>
-<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>RedHat 系：</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">yum install -y libnet libnet-devel libpcap libpcap-devel gcc</span><br></pre></td></tr></table></figure>
-<p>Debian 系：</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">apt-get install -y libpcap-dev libnet-dev libnids-dev gcc</span><br></pre></td></tr></table></figure>
-<h3 id="进行编译"><a href="#进行编译" class="headerlink" title="进行编译"></a>进行编译</h3><p>OpenVZ：</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">gcc ./net_speeder.c -o net_speeder -O2 -lpcap -lnet -DCOOKED</span><br></pre></td></tr></table></figure>
-<p>KVM：</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">gcc ./net_speeder.c -o net_speeder -O2 -lpcap -lnet</span><br></pre></td></tr></table></figure>
-<p>（相信玄学的人和强迫症可以使用 O3 优化）</p>
-<h3 id="启动-Net-Speeder"><a href="#启动-Net-Speeder" class="headerlink" title="启动 Net Speeder"></a>启动 Net Speeder</h3><p>OpenVZ：</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">nohup ./net_speeder venet0 <span class="hljs-string">"ip"</span> &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<p>KVM：</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">nohup ./net_speeder eth0 <span class="hljs-string">"ip"</span> &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<p>加入开机启动：</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">vim /etc/profile.d/net_speeder.sh</span><br></pre></td></tr></table></figure>
-<p>输入</p>
-<figure class="highlight plain hljs"><table><tr><td class="code"><pre><span class="line">#! /bin/sh</span><br><span class="line">你 VPS 类型对应的启动命令（需要绝对地址）</span><br></pre></td></tr></table></figure>
-<p>:wq 保存并退出即可。</p>
-<figure class="highlight bash hljs"><table><tr><td class="code"><pre><span class="line">ping -c 4 google.com</span><br></pre></td></tr></table></figure>
-<p>若显示有 duplicate 则配置成功。</p>
-<p>但 Net Speeder 并不是没有缺点的，由于它强制双倍发包的策略，在丢包率低的时候，反而可能会减慢网络速度。</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/net-speeder/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -356,17 +339,6 @@
     </div>
 </div>
     
-        
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            标签云
-        </h3>
-        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/V2Ray/" style="font-size: 10px;">V2Ray</a> <a href="/tags/信息学/" style="font-size: 10px;">信息学</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/日常/" style="font-size: 10px;">日常</a> <a href="/tags/网络/" style="font-size: 20px;">网络</a>
-    </div>
-</div>
-
-    
     
         <div class="card card-transparent is-hidden-widescreen">
         
@@ -438,119 +410,16 @@
 </div>
 
         
-            <div class="card widget">
+            
+<div class="card widget">
     <div class="card-content">
-        <div class="menu">
         <h3 class="menu-label">
-            文档
+            标签云
         </h3>
-        <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/11/">
-                <span class="level-start">
-                    <span class="level-item">十一月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">2</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/10/">
-                <span class="level-start">
-                    <span class="level-item">十月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
-        </ul>
-        </div>
+        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/V2Ray/" style="font-size: 10px;">V2Ray</a> <a href="/tags/信息学/" style="font-size: 10px;">信息学</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/日常/" style="font-size: 10px;">日常</a> <a href="/tags/网络/" style="font-size: 20px;">网络</a>
     </div>
 </div>
-        
-            <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                标签
-            </h3>
-            <ul class="menu-list">
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/Net-Speeder/">
-                        <span class="level-start">
-                            <span class="level-item">Net-Speeder</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/V2Ray/">
-                        <span class="level-start">
-                            <span class="level-item">V2Ray</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/信息学/">
-                        <span class="level-start">
-                            <span class="level-item">信息学</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/技术/">
-                        <span class="level-start">
-                            <span class="level-item">技术</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/日常/">
-                        <span class="level-start">
-                            <span class="level-item">日常</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/网络/">
-                        <span class="level-start">
-                            <span class="level-item">网络</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">2</span>
-                        </span>
-                    </a>
-                </li>
-                
-            </ul>
-        </div>
-    </div>
-</div>
+
         
         </div>
     
@@ -629,119 +498,16 @@
 </div>
 
     
-        <div class="card widget">
+        
+<div class="card widget">
     <div class="card-content">
-        <div class="menu">
         <h3 class="menu-label">
-            文档
+            标签云
         </h3>
-        <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/11/">
-                <span class="level-start">
-                    <span class="level-item">十一月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">2</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/10/">
-                <span class="level-start">
-                    <span class="level-item">十月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
-        </ul>
-        </div>
+        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/V2Ray/" style="font-size: 10px;">V2Ray</a> <a href="/tags/信息学/" style="font-size: 10px;">信息学</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/日常/" style="font-size: 10px;">日常</a> <a href="/tags/网络/" style="font-size: 20px;">网络</a>
     </div>
 </div>
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                标签
-            </h3>
-            <ul class="menu-list">
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/Net-Speeder/">
-                        <span class="level-start">
-                            <span class="level-item">Net-Speeder</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/V2Ray/">
-                        <span class="level-start">
-                            <span class="level-item">V2Ray</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/信息学/">
-                        <span class="level-start">
-                            <span class="level-item">信息学</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/技术/">
-                        <span class="level-start">
-                            <span class="level-item">技术</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/日常/">
-                        <span class="level-start">
-                            <span class="level-item">日常</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
-                    <a class="level is-marginless" href="/tags/网络/">
-                        <span class="level-start">
-                            <span class="level-item">网络</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">2</span>
-                        </span>
-                    </a>
-                </li>
-                
-            </ul>
-        </div>
-    </div>
-</div>
+
     
     
 </div>

@@ -2,7 +2,7 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>分类: 日常 - 听风</title>
+<title>分类: 硬件 - 听风</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -10,7 +10,7 @@
     <meta name="description" content="Personal blog of 1cswd">
 <meta property="og:type" content="website">
 <meta property="og:title" content="听风">
-<meta property="og:url" content="http://www.1cswd.com/categories/日常/index.html">
+<meta property="og:url" content="http://www.1cswd.com/categories/硬件/index.html">
 <meta property="og:site_name" content="听风">
 <meta property="og:description" content="Personal blog of 1cswd">
 <meta property="og:locale" content="zh-CN">
@@ -119,7 +119,7 @@
         <ul>
             <li><a href="/categories">分类</a></li>
             
-            <li class="is-active"><a href="#" aria-current="page">日常</a></li>
+            <li class="is-active"><a href="#" aria-current="page">硬件</a></li>
         </ul>
         </nav>
     </div>
@@ -128,8 +128,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/afo/" class="image is-7by1">
-            <img class="thumbnail" src="/afo/cover.jpg" alt="相逢是问候，分手是祝愿。">
+        <a href="/A12X/" class="image is-7by1">
+            <img class="thumbnail" src="/A12X/cover.jpg" alt="A12X 的性能探究思路">
         </a>
     </div>
     
@@ -137,17 +137,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-24T13:06:18.000Z">2018-11-24</time>
+                <time class="level-item has-text-grey" datetime="2019-02-11T11:43:02.000Z">2019-02-11</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/日常/">日常</a>
+                <a class="has-link-grey -link" href="/categories/硬件/">硬件</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 512 个字)
+                    3 分钟 读完 (大约 439 个字)
                 </span>
                 
             </div>
@@ -155,22 +155,49 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/afo/">相逢是问候，分手是祝愿。</a>
+                <a class="has-link-black-ter" href="/A12X/">A12X 的性能探究思路</a>
             
         </h1>
         <div class="content">
-            <p>注：这是一篇蒙太奇式（并不算是）“文章”，只有几个句子且都不是出自我笔下。</p>
-<p>在这一分别的时刻，我却硬是写不出哪怕一句话，虽然我清楚一旦我写出第一行，便会酣畅淋漓地写下去。但就是死活写不出那第一行。</p>
+            <p>苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好”</p>
+<p>这着实惊到了我。</p>
+<p>随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。</p>
+<p>而我只想说一句：</p>
+<h3 id="说睿频-45W-的实诚-14nm-打不过峰值-21W（电流计实测）的注水-7nm-的你们是石乐志？"><a href="#说睿频-45W-的实诚-14nm-打不过峰值-21W（电流计实测）的注水-7nm-的你们是石乐志？" class="headerlink" title="说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注水 7nm 的你们是石乐志？"></a>说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注水 7nm 的你们是石乐志？</h3><p>为了探究这一事实，先给出测试构想，具体实现待作者高考后再实行。</p>
+<h2 id="质疑："><a href="#质疑：" class="headerlink" title="质疑："></a>质疑：</h2><ol>
+<li>我对于 spec2006 这一老牌测试在 13 年后的今天是否还能作为评判标准表示质疑。</li>
+<li>我对以 GFXbench 的得分作为评价标准的人只有一个字：</li>
+</ol>
+<h1 id="滚"><a href="#滚" class="headerlink" title="滚"></a>滚</h1><p>原因见图：</p>
+<p><img src="rubbishGFX.jpg" alt=""></p>
+<p>HD 630 比 GTX 1050Ti 强你怕不怕？</p>
+<ol start="3">
+<li>我对以 GeekBench 的得分作为评价标准的人只有一个字：</li>
+</ol>
+<h1 id="滚-1"><a href="#滚-1" class="headerlink" title="滚"></a>滚</h1><p>原因见图：</p>
+<p><img src="GB9900K.jpg" alt=""></p>
+<p><img src="GBA12X.jpg" alt=""></p>
+<p>A12X 单核比 9900K@5Ghz 强你怕不怕？</p>
+<h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h2><ol>
+<li>CPU 部分，由于 iOS 12 可以 rootless 越狱使用终端，可以使用 Linux PC 与 iPad Pro 同时执行 GCC 编译出的可执行 C 语言文件，并用 clock() 函数计时，由于 XNU 与 GNU 同为支持 POSIX (ISO/IEC 9945-1:1990) 标准的操作系统，故不存在跨平台问题，可以比较。</li>
+<li><p>可以用作测试的算法：</p>
+<ul>
+<li>Prime</li>
+<li>Pi</li>
+<li>Dijkstra</li>
+<li>FFT</li>
+<li>……</li>
+</ul>
+</li>
+<li><p>编译命令：gcc “in.c” “test.out” -lm 无多余参数。</p>
+</li>
+<li><p>GPU 部分，可以选择跨平台引擎如虚幻等直接比较帧数，不多赘述。</p>
+<p>留坑待填。</p>
+</li>
+</ol>
+
         </div>
         
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/afo/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
         
         
     </div>
@@ -234,7 +261,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        6
+                        5
                     </p>
                 </div>
             </div>
@@ -311,9 +338,9 @@
             </h3>
             <ul class="menu-list">
             <li>
-        <a class="level is-marginless" href="/categories/日常/">
+        <a class="level is-marginless" href="/categories/硬件/">
             <span class="level-start">
-                <span class="level-item">日常</span>
+                <span class="level-item">硬件</span>
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
@@ -344,18 +371,18 @@
         
         <article class="media">
             
-            <a href="/afo/" class="media-left">
+            <a href="/A12X/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/afo/cover.jpg" alt="相逢是问候，分手是祝愿。">
+                    <img class="thumbnail" src="/A12X/cover.jpg" alt="A12X 的性能探究思路">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-24T13:06:18.000Z">2018-11-24</time></div>
-                    <a href="/afo/" class="has-link-black-ter is-size-6">相逢是问候，分手是祝愿。</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-02-11T11:43:02.000Z">2019-02-11</time></div>
+                    <a href="/A12X/" class="has-link-black-ter is-size-6">A12X 的性能探究思路</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/日常/">日常</a>
+                        <a class="has-link-grey -link" href="/categories/硬件/">硬件</a>
                     </p>
                 </div>
             </div>
@@ -409,7 +436,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/V2Ray/" style="font-size: 10px;">V2Ray</a> <a href="/tags/信息学/" style="font-size: 10px;">信息学</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/日常/" style="font-size: 10px;">日常</a> <a href="/tags/网络/" style="font-size: 20px;">网络</a>
+        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/V2Ray/" style="font-size: 10px;">V2Ray</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/硬件/" style="font-size: 10px;">硬件</a> <a href="/tags/网络/" style="font-size: 20px;">网络</a>
     </div>
 </div>
 
@@ -432,18 +459,18 @@
         
         <article class="media">
             
-            <a href="/afo/" class="media-left">
+            <a href="/A12X/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/afo/cover.jpg" alt="相逢是问候，分手是祝愿。">
+                    <img class="thumbnail" src="/A12X/cover.jpg" alt="A12X 的性能探究思路">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-24T13:06:18.000Z">2018-11-24</time></div>
-                    <a href="/afo/" class="has-link-black-ter is-size-6">相逢是问候，分手是祝愿。</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-02-11T11:43:02.000Z">2019-02-11</time></div>
+                    <a href="/A12X/" class="has-link-black-ter is-size-6">A12X 的性能探究思路</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/日常/">日常</a>
+                        <a class="has-link-grey -link" href="/categories/硬件/">硬件</a>
                     </p>
                 </div>
             </div>
@@ -497,7 +524,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/V2Ray/" style="font-size: 10px;">V2Ray</a> <a href="/tags/信息学/" style="font-size: 10px;">信息学</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/日常/" style="font-size: 10px;">日常</a> <a href="/tags/网络/" style="font-size: 20px;">网络</a>
+        <a href="/tags/Net-Speeder/" style="font-size: 10px;">Net-Speeder</a> <a href="/tags/V2Ray/" style="font-size: 10px;">V2Ray</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/硬件/" style="font-size: 10px;">硬件</a> <a href="/tags/网络/" style="font-size: 20px;">网络</a>
     </div>
 </div>
 
@@ -518,7 +545,7 @@
                 
 		</a>
                 <p class="is-size-7">
-                &copy; 2018 1cswd&nbsp;
+                &copy; 2019 1cswd&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

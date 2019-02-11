@@ -2,25 +2,31 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>文档 - 听风</title>
+<title>A12X 的性能探究思路 - 听风</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="Personal blog of 1cswd">
-<meta property="og:type" content="website">
-<meta property="og:title" content="听风">
-<meta property="og:url" content="http://www.1cswd.com/archives/index.html">
+    <meta name="description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。 而我只想说一句： 说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注">
+<meta name="keywords" content="技术,硬件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A12X 的性能探究思路">
+<meta property="og:url" content="http://www.1cswd.com/A12X/index.html">
 <meta property="og:site_name" content="听风">
-<meta property="og:description" content="Personal blog of 1cswd">
+<meta property="og:description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。 而我只想说一句： 说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.1cswd.com/A12X/rubbishGFX.jpg">
+<meta property="og:image" content="http://www.1cswd.com/A12X/GB9900K.jpg">
+<meta property="og:image" content="http://www.1cswd.com/A12X/GBA12X.jpg">
+<meta property="og:updated_time" content="2019-02-11T12:49:17.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="听风">
-<meta name="twitter:description" content="Personal blog of 1cswd">
+<meta name="twitter:title" content="A12X 的性能探究思路">
+<meta name="twitter:description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。 而我只想说一句： 说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注">
+<meta name="twitter:image" content="http://www.1cswd.com/A12X/rubbishGFX.jpg">
 
 
 
-<link rel="alternative" href="/atom.xml" title="听风" type="application/atom+xml">
+<link rel="alternative" href="/atom.xml" title="A12X 的性能探究思路" type="application/atom+xml">
 
 
 
@@ -88,7 +94,7 @@
                 
                 <a class="navbar-item" href="/">Home</a>
                 
-                <a class="navbar-item is-active" href="/archives">Archives</a>
+                <a class="navbar-item" href="/archives">Archives</a>
                 
                 <a class="navbar-item" href="/categories">Categories</a>
                 
@@ -113,108 +119,133 @@
     <section class="section">
         <div class="container">
             <div class="columns main">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/A12X/cover.jpg" alt="A12X 的性能探究思路">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
         
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="tag is-link">
-        2019
-        </h3>
-        <div class="timeline">
-        
-            <article class="media">
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-02-11T11:43:02.000Z">2019-02-11</time>
                 
-                <a href="/A12X/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/A12X/cover.jpg" alt="A12X 的性能探究思路">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-02-11T11:43:02.000Z">2019-02-11</time>
-                        <a href="/A12X/" class="has-link-black-ter is-size-6">A12X 的性能探究思路</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/硬件/">硬件</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/硬件/">硬件</a>
                 </div>
-            </article>
-        
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 439 个字)
+                </span>
+                
+            </div>
         </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                A12X 的性能探究思路
+            
+        </h1>
+        <div class="content">
+            <p>苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好”</p>
+<p>这着实惊到了我。</p>
+<p>随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。</p>
+<p>而我只想说一句：</p>
+<h3 id="说睿频-45W-的实诚-14nm-打不过峰值-21W（电流计实测）的注水-7nm-的你们是石乐志？"><a href="#说睿频-45W-的实诚-14nm-打不过峰值-21W（电流计实测）的注水-7nm-的你们是石乐志？" class="headerlink" title="说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注水 7nm 的你们是石乐志？"></a>说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注水 7nm 的你们是石乐志？</h3><p>为了探究这一事实，先给出测试构想，具体实现待作者高考后再实行。</p>
+<h2 id="质疑："><a href="#质疑：" class="headerlink" title="质疑："></a>质疑：</h2><ol>
+<li>我对于 spec2006 这一老牌测试在 13 年后的今天是否还能作为评判标准表示质疑。</li>
+<li>我对以 GFXbench 的得分作为评价标准的人只有一个字：</li>
+</ol>
+<h1 id="滚"><a href="#滚" class="headerlink" title="滚"></a>滚</h1><p>原因见图：</p>
+<p><img src="rubbishGFX.jpg" alt=""></p>
+<p>HD 630 比 GTX 1050Ti 强你怕不怕？</p>
+<ol start="3">
+<li>我对以 GeekBench 的得分作为评价标准的人只有一个字：</li>
+</ol>
+<h1 id="滚-1"><a href="#滚-1" class="headerlink" title="滚"></a>滚</h1><p>原因见图：</p>
+<p><img src="GB9900K.jpg" alt=""></p>
+<p><img src="GBA12X.jpg" alt=""></p>
+<p>A12X 单核比 9900K@5Ghz 强你怕不怕？</p>
+<h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h2><ol>
+<li>CPU 部分，由于 iOS 12 可以 rootless 越狱使用终端，可以使用 Linux PC 与 iPad Pro 同时执行 GCC 编译出的可执行 C 语言文件，并用 clock() 函数计时，由于 XNU 与 GNU 同为支持 POSIX (ISO/IEC 9945-1:1990) 标准的操作系统，故不存在跨平台问题，可以比较。</li>
+<li><p>可以用作测试的算法：</p>
+<ul>
+<li>Prime</li>
+<li>Pi</li>
+<li>Dijkstra</li>
+<li>FFT</li>
+<li>……</li>
+</ul>
+</li>
+<li><p>编译命令：gcc “in.c” “test.out” -lm 无多余参数。</p>
+</li>
+<li><p>GPU 部分，可以选择跨平台引擎如虚幻等直接比较帧数，不多赘述。</p>
+<p>留坑待填。</p>
+</li>
+</ol>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/技术/">技术</a>, <a class="has-link-grey -link" href="/tags/硬件/">硬件</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
     </div>
 </div>
 
-    
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
         
-<div class="card widget">
-    <div class="card-content">
-        <h3 class="tag is-link">
-        2018
-        </h3>
-        <div class="timeline">
         
-            <article class="media">
-                
-                <a href="/V2Ray-WebSocket/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/V2Ray-WebSocket/cover.jpg" alt="V2Ray 的 WebSocket 配置">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2018-11-19T15:53:27.000Z">2018-11-19</time>
-                        <a href="/V2Ray-WebSocket/" class="has-link-black-ter is-size-6">V2Ray 的 WebSocket 配置</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/网络/">网络</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <a href="/net-speeder/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/net-speeder/cover.jpg" alt="使用 Net-Speeder 加速高丢包率环境下的网络连接">
-                    </p>
-                </a>
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2018-10-28T15:47:24.000Z">2018-10-28</time>
-                        <a href="/net-speeder/" class="has-link-black-ter is-size-6">使用 Net-Speeder 加速高丢包率环境下的网络连接</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/网络/">网络</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/V2Ray-WebSocket/">
+                <span class="level-item">V2Ray 的 WebSocket 配置</span>
+                <i class="level-item material-icons">keyboard_arrow_right</i>
+            </a>
         </div>
+        
     </div>
 </div>
 
-    
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+<script src="https://jjeejj.github.io/js/gitment.js"></script>
+<script>
+	var gitment = new Gitment({
+		id: 'A12X/',
+		owner: '1cswd',
+		repo: 'Gitalk',
+		oauth: {
+			client_id: '09972d9aa82c55836e3e',
+			client_secret: '6394e11e33417a8645501d87da94b6e547dd0991',
+		},
+	})
+	gitment.render('comment-container')
+</script>
+
+
+    </div>
+</div>
 </div>
                 
 

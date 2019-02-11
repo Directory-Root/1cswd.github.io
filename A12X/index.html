@@ -7,21 +7,21 @@
 
 
 
-    <meta name="description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。 而我只想说一句： 说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注">
+    <meta name="description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。">
 <meta name="keywords" content="技术,硬件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A12X 的性能探究思路">
 <meta property="og:url" content="http://www.1cswd.com/A12X/index.html">
 <meta property="og:site_name" content="听风">
-<meta property="og:description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。 而我只想说一句： 说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注">
+<meta property="og:description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.1cswd.com/A12X/rubbishGFX.jpg">
 <meta property="og:image" content="http://www.1cswd.com/A12X/GB9900K.jpg">
 <meta property="og:image" content="http://www.1cswd.com/A12X/GBA12X.jpg">
-<meta property="og:updated_time" content="2019-02-11T12:49:17.143Z">
+<meta property="og:updated_time" content="2019-02-11T12:54:41.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A12X 的性能探究思路">
-<meta name="twitter:description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。 而我只想说一句： 说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注">
+<meta name="twitter:description" content="苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好” 这着实惊到了我。 随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。">
 <meta name="twitter:image" content="http://www.1cswd.com/A12X/rubbishGFX.jpg">
 
 
@@ -141,7 +141,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 439 个字)
+                    3 分钟 读完 (大约 440 个字)
                 </span>
                 
             </div>
@@ -156,6 +156,7 @@
             <p>苹果在发布新 iPad Pro 时如此宣传 A12X：“比市面上大多数笔记本电脑的性能都要好”</p>
 <p>这着实惊到了我。</p>
 <p>随后，逼乎大佬们拿着 spec2006 GFXbench GeekBench(AppleBitch) 的成绩，大肆鼓吹 A12X 吊打 8650U，在此风头之下，牙膏厂大有完全溃败之势。</p>
+<a id="more"></a>
 <p>而我只想说一句：</p>
 <h3 id="说睿频-45W-的实诚-14nm-打不过峰值-21W（电流计实测）的注水-7nm-的你们是石乐志？"><a href="#说睿频-45W-的实诚-14nm-打不过峰值-21W（电流计实测）的注水-7nm-的你们是石乐志？" class="headerlink" title="说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注水 7nm 的你们是石乐志？"></a>说睿频 45W 的实诚 14nm+++++ 打不过峰值 21W（电流计实测）的注水 7nm 的你们是石乐志？</h3><p>为了探究这一事实，先给出测试构想，具体实现待作者高考后再实行。</p>
 <h2 id="质疑："><a href="#质疑：" class="headerlink" title="质疑："></a>质疑：</h2><ol>
